@@ -1,0 +1,44 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+
+# next.js / build
+/.next/
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# testing / debug
+/coverage
+npm-debug.log*
+yarn-debug.log*
+.pnpm-debug.log*
+
+# secrets & env  (.env.example 만 올림)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+.vercel
+
+# local db / data dumps
+*.db
+*.db-journal
+*.sql
+*.dump
+/prisma/*.db
+/public/uploads
+
+# 커밋하지 않는 작업 폴더
+/Claude outputs/
+/_to_review/
+/captures-new/
+/docs/design-handover/reference/
+
+# misc
+.DS_Store
