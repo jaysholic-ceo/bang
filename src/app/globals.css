@@ -92,10 +92,8 @@
 /* More Structured Shadow Utility */
 @layer utilities {
   .shadow-premium {
-    box-shadow: 0 8px 24px -6px rgba(40, 48, 56, 0.08), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
-  }
-  .glass-morphism {
-    @apply bg-white/80 backdrop-blur-lg border border-white/30;
+    /* 그림자 색은 검정이 아니라 slate 를 옅게 한 값(토큰 shadow-tint) */
+    box-shadow: 0 8px 24px -6px rgba(40, 48, 56, 0.08), 0 2px 8px -2px rgba(40, 48, 56, 0.05);
   }
 }
 
@@ -128,6 +126,7 @@
   background-color: #283038;
 }
 .bg-black .text-primary,
+.bg-foreground .text-primary,
 .bg-zinc-900 .text-primary,
 .bg-slate-900 .text-primary,
 .bg-\[\#0A0D10\] .text-primary {

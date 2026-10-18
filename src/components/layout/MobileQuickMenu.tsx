@@ -16,7 +16,7 @@ export function MobileQuickMenu() {
     return (
         <nav
             aria-label="빠른 메뉴"
-            className="lg:hidden fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 backdrop-blur pb-[env(safe-area-inset-bottom)]"
+            className="lg:hidden fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background pb-[env(safe-area-inset-bottom)]"
         >
             <div className="mx-auto flex max-w-xl items-stretch gap-2 p-2">
                 <a

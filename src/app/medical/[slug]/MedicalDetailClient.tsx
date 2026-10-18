@@ -17,7 +17,6 @@ const DISEASES: Record<string, {
     treatmentTitle: string;
     treatmentContent: string;
     source: string;
-    color: string;
 }> = {
     disc: {
         title: "디스크",
@@ -26,7 +25,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "디스크의 치료",
         treatmentContent: "교과서적으로 추간판탈출증은 안정과 휴식을 취하면서 약물치료, 물리치료, 신경치료 등의 보존적 치료를 우선시행 하게 되어 있습니다.\n\n80~90% 이상의 환자들은 비수술적 요법으로 대개 2개월내 증상이 호전되며, 수술을 필요로 하는 환자는 전체의 3~5% 정도에 불과한 것으로 알려져 있습니다.\n\n증상 초기 3개월내는 수술을 피하는 것이 좋은데, 대부분 이 기간을 지내면 증상이 호전되기 때문입니다. 수술 전 주된 증상이 요통일 경우는 추간판 절제 수술을 하여도 호전이 적은 것으로 알려져 있습니다.",
         source: "추간판탈출증[lumbar herniated intervertebral disc] (국가건강정보포털 의학정보, 서울대학교병원 의학정보)",
-        color: "text-blue-500",
     },
     stenosis: {
         title: "척추관협착증",
@@ -35,7 +33,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "척추관협착증의 치료",
         treatmentContent: "척추관협착증 환자는 급격한 증상의 악화나 기능의 저하가 드물기에 먼저 보존적 치료를 시행합니다. 보존적 치료 방법에는 생활습관교정, 적절한 운동, 물리치료, 신경치료 등 다양한 방법이 사용됩니다.\n\n급격히 다리의 힘이 약해지고 대소변 기능의 장애가 발생하는 등 신경 증상이 악화되는 환자가 아니면 척추관협착증 환자에서 수술은 응급하게 시행하지 않아도 됩니다. 수술을 해야 하는 경우는 신경 증상이 악화되는 경우, 보존적 치료로 통증이 완화되지 않는 경우, 지속적인 장애, 일상생활의 제한이 있는 경우입니다.\n\nLarequi-Lauber 등은 척추관협착증 수술환자 328명의 적응증이 적절하였는지 분석하였는데 38%에서는 적응증이 부적절하였다고 보고하였습니다. 척추관협착증에 해당하는 증상의 과거력, 신체 검진소견, 방사선학적 소견이 없는 환자는 비수술적 치료가 우선권고되고 있습니다.",
         source: "척추관협착증[spinal stenosis] (국가건강정보포털 의학정보, 서울대학교병원 의학정보)",
-        color: "text-teal-500",
     },
     shingles: {
         title: "대상포진",
@@ -44,7 +41,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "대상포진의 치료",
         treatmentContent: "가장 중요한 치료는 수포발생 3일 내 항바이러스제를 복용하는 것입니다. 초기에 신경치료를 시행하는 것이 만성통증으로의 이환을 줄일 수 있으며, 특히 심한 신경증상을 동반한 통증 및 이질통 등이 생기는 경우 특수카테터를 이용한 지속적 경막외신경치료 등이 도움이 될 수 있습니다.",
         source: "대상포진 후 신경통[postherpetic neuralgia] (서울대학교병원 의학정보)",
-        color: "text-amber-500",
     },
     "frozen-shoulder": {
         title: "오십견",
@@ -53,7 +49,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "오십견의 치료",
         treatmentContent: "치료원칙은 물리치료, 운동치료, 신경치료 등 보존적 치료가 우선이며 수동적 관절 운동을 통한 관절 운동 범위를 회복시키는 것입니다.\n\n견갑상 신경치료, 관절강내 수압팽창술, 상완신경총 마취하 도수조작(brisement manipulation) 등의 보조요법이 도움이 될 수 있습니다. 체계적인 보존 요법은 환자의 90%에서 만족할만한 임상 결과를 보이며, 6개월 이상의 체계적인 치료에도 불구하고 회복의 징후가 보이지 않을 경우 수술 등이 필요할 수 있습니다.",
         source: "오십견[frozen shoulder] (국가건강정보포털 의학정보, 서울대학교병원 건강칼럼)",
-        color: "text-rose-500",
     },
     "rotator-cuff": {
         title: "회전근개파열",
@@ -62,7 +57,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "회전근개파열의 치료",
         treatmentContent: "보존적 치료가 우선이며 운동치료, 물리치료, 신경치료, 인대강화치료(DNA주사, 태반주사) 등이 통증 조절과 관절 기능을 회복하는데 도움을 주며 일상생활을 가능하게 합니다. 그러나 3개월가량의 보존치료에도 증상이 지속되는 경우 수술을 생각해 볼 수 있습니다.\n\n고령, 힘줄파열의 정도가 심한 경우, 근육위축이 동반된 경우에는 수술 예후가 좋지 않은 것으로 알려져 있으며, 한국 보건의료연구원의 최근 연구에 의하면(서울소재 3개 대학병원에서 2008년부터 2013년까지 1~3CM의 회전근개파열로 치료받은 50세 이상 환자 대상의 연구), 수술치료군과 보존치료군 모두 시간 경과에 따라 통증이 감소하는 경향을 보였고, 1년후에는 치료법에 따른 통증감소 정도에 차이가 없었으며, 평균 관절가동범위도 치료에 따른 유의한 효과 차이가 없다고 보고하였습니다.",
         source: "회전근개파열 (한국보건의료연구원, 서울대학교병원 의학정보)",
-        color: "text-indigo-500",
     },
     arthritis: {
         title: "퇴행성관절염",
@@ -71,7 +65,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "퇴행성관절염의 치료",
         treatmentContent: "퇴행성관절염은 관절 연골의 퇴행성 변화로 인해 발생하는 질환으로, 비수술적 보존 치료가 우선 권고됩니다. 물리치료, 운동치료, 약물치료, 신경치료, 관절강내 주사(히알루론산, PRP) 등의 다양한 보존적 치료법이 활용되며, 적절한 체중 관리와 근력 강화 운동이 중요합니다. 장기간의 보존적 치료에도 호전이 없는 경우 수술적 치료를 고려할 수 있습니다.",
         source: "퇴행성관절염[degenerative arthritis] (서울대학교병원 의학정보)",
-        color: "text-emerald-500",
     },
     "carpal-tunnel": {
         title: "손목터널증후군",
@@ -80,7 +73,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "손목터널증후군의 치료",
         treatmentContent: "비수술적 보존치료법으로 염증이 발생한 정중신경을 직접 치료하는 정중신경 치료와 약물치료, 물리치료, 운동치료 등이 있으며, 대부분 비수술적인 방법으로 호전되나 장기간의 보존치료에 호전이 없는 경우, 힘이 약해지거나 근육이 위축되는 경우에는 수술 대상이 될 수 있습니다.",
         source: "수근관 증후군[carpal tunnel syndrome] (서울대학교병원 의학정보, 서울대학교병원 건강칼럼)",
-        color: "text-cyan-500",
     },
     "tennis-elbow": {
         title: "테니스엘보우",
@@ -89,7 +81,6 @@ const DISEASES: Record<string, {
         treatmentTitle: "테니스엘보우의 치료",
         treatmentContent: "가장 중요한 것은 관절의 휴식이며, 물리치료, 운동치료, 신경치료, 인대강화치료(DNA주사, 태반주사) 등의 보존적 요법으로 90% 이상 회복되지만, 6개월 이상 충분한 휴식을 가지고 보존적 치료를 하였음에도 듣지 않는다면 수술적 치료가 필요할 수 있습니다.",
         source: "상과염[epicondylitis] (서울대학교병원 의학정보)",
-        color: "text-zinc-500",
     },
 };
 
@@ -137,7 +128,7 @@ export default function MedicalDetailClient() {
             <PageHero
                 breadcrumb={
                     <nav aria-label="현재 위치" className="mb-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                        <Link href="/medical" className="hover:text-primary transition-colors">주요 질환</Link>
+                        <Link href="/medical" className="inline-flex min-h-6 items-center hover:text-primary transition-colors">주요 질환</Link>
                         <ChevronRight size={14} aria-hidden="true" />
                         <span aria-current="page" className="font-bold text-foreground">{disease.title}</span>
                     </nav>
@@ -219,7 +210,7 @@ export default function MedicalDetailClient() {
                                 </div>
 
                                 {/* Source & CTA */}
-                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pt-10 border-t border-zinc-100">
+                                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pt-10 border-t border-border">
                                     <div className="flex items-center gap-3 text-sm text-muted-foreground">
                                         <BookOpen size={16} />
                                         <p>출처: {disease.source}</p>

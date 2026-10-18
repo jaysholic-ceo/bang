@@ -103,7 +103,7 @@ export default function NewsClient({ initialPosts }: { initialPosts: PostItem[] 
                             <motion.article
                                 key={post.id}
                                 variants={fadeUp}
-                                className="group grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start pb-12 md:pb-16 border-b border-slate-100 last:border-0"
+                                className="group grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start pb-12 md:pb-16 border-b border-border last:border-0"
                             >
                                 {/* Thumbnail */}
                                 <div className="md:col-span-5 aspect-[16/10] md:aspect-[4/3] relative rounded-xl overflow-hidden bg-secondary border border-border">
@@ -132,7 +132,7 @@ export default function NewsClient({ initialPosts }: { initialPosts: PostItem[] 
 
                                 {/* Content */}
                                 <div className="md:col-span-7 flex flex-col h-full py-1">
-                                    <div className="flex items-center text-[10px] md:text-xs text-muted-foreground font-bold uppercase tracking-[0.2em] mb-3 md:mb-4 gap-4">
+                                    <div className="flex items-center text-[11px] md:text-xs text-muted-foreground font-bold uppercase tracking-[0.2em] mb-3 md:mb-4 gap-4">
                                         <div className="flex items-center gap-1.5">
                                             <Calendar size={12} className="text-primary/40" />
                                             <span>{post.date}</span>
@@ -148,13 +148,13 @@ export default function NewsClient({ initialPosts }: { initialPosts: PostItem[] 
                                             {post.title}
                                         </h2>
                                     </Link>
-                                    <p className="text-slate-600 font-normal text-sm md:text-base leading-relaxed line-clamp-2 md:line-clamp-3 mb-6 md:mb-8 break-keep opacity-80">
+                                    <p className="text-muted-foreground font-normal text-sm md:text-base leading-relaxed line-clamp-2 md:line-clamp-3 mb-6 md:mb-8 break-keep opacity-80">
                                         {post.excerpt}
                                     </p>
 
                                     <Link 
                                         href={`/news/${post.id}`}
-                                        className="inline-flex items-center gap-2 text-primary text-[10px] md:text-[11px] font-bold uppercase tracking-widest mt-auto group/link"
+                                        className="inline-flex min-h-11 items-center gap-2 text-primary text-[11px] font-bold uppercase tracking-widest mt-auto group/link"
                                     >
                                         Read Article <ChevronRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                                     </Link>

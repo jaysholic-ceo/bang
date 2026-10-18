@@ -72,7 +72,7 @@ export default function DoctorChoiPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 pt-32 pb-24">
+    <div className="min-h-screen bg-background pt-32 pb-24">
       <div className="container mx-auto max-w-5xl px-4">
         <motion.div 
           initial="hidden"
@@ -87,8 +87,8 @@ export default function DoctorChoiPage() {
             </Link>
           </Button>
           
-          <div className="flex flex-col md:flex-row gap-12 items-center md:items-start bg-white p-12 rounded-[3rem] shadow-xl border border-primary/5">
-            <div className="w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl flex-shrink-0">
+          <div className="flex flex-col md:flex-row gap-12 items-center md:items-start bg-white p-12 rounded-[3rem] shadow-premium border border-border">
+            <div className="w-64 aspect-[3/4] rounded-2xl overflow-hidden shadow-premium flex-shrink-0">
               <img 
                 src="/doctor-choi.jpg" 
                 alt="최용민 대표원장" 
@@ -96,7 +96,7 @@ export default function DoctorChoiPage() {
               />
             </div>
             <div className="flex-grow">
-              <div className="mb-8 pb-8 border-b border-zinc-100">
+              <div className="mb-8 pb-8 border-b border-border">
                 <span className="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-2 block">Founding Director</span>
                 <h1 className="text-5xl font-serif font-bold text-foreground mb-4">최용민 대표원장</h1>
                 <p className="text-xl text-muted-foreground font-light">비수술 통증치료의 전문성과 20년의 임상 경험으로 <br />당신의 일상을 치유합니다.</p>
@@ -120,7 +120,7 @@ export default function DoctorChoiPage() {
                     </div>
                     <ul className="space-y-3">
                       {section.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-3 text-zinc-700 text-sm leading-relaxed">
+                        <li key={i} className="flex items-start gap-3 text-foreground text-sm leading-relaxed">
                           <div className="w-1 h-1 rounded-full bg-primary/40 mt-2" />
                           <span className="break-keep">{item}</span>
                         </li>

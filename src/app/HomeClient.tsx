@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, Users, HeartPulse, Play, Calendar } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Users, HeartPulse, Play, Pause, Calendar } from "lucide-react";
 import { BODY_PART_GROUPS } from "@/data/body-parts";
 import StatsBand from "@/components/home/StatsBand";
 import { CLINIC_YEARS } from "@/lib/clinic";
@@ -25,6 +25,13 @@ const MILESTONES: { year: string; items: string[] }[] = [
 export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
   const [playingVideoIdx, setPlayingVideoIdx] = useState<number | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  // 배경 영상: "모션 줄이기" 설정이면 처음부터 틀지 않고, 그 밖에는 정지 버튼으로 멈출 수 있습니다(WCAG 2.2.2).
+  // 멈추면 영상을 내리고 바탕 레이어(단색, 정지 이미지가 들어오면 그 이미지)만 보입니다.
+  const prefersReducedMotion = useReducedMotion();
+  const [heroVideoPaused, setHeroVideoPaused] = useState(false);
+  const hasHeroVideo = Boolean(mediaPosts && mediaPosts.length > 0 && mediaPosts[0].videoId);
+  const showHeroVideo = hasHeroVideo && !prefersReducedMotion && !heroVideoPaused;
 
   // 방송·영상 가로 스크롤: 카드 한 장 + 간격만큼 이동 (scroll-smooth 는 모션 줄이기 설정을 따릅니다)
   const scrollMedia = (dir: 1 | -1) => {
@@ -56,7 +63,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
       <section className="relative min-h-[60vh] md:min-h-[80vh] flex items-center px-4 py-12 md:py-24 overflow-hidden bg-black group">
         
         {/* 바탕 레이어 — 영상이 늦게 뜨거나 실패해도 보이는 자리. 영상 유무와 상관없이 항상 그립니다. */}
-        <div className="absolute inset-0 bg-slate-900 z-0">
+        <div className="absolute inset-0 bg-foreground z-0">
           {/*
             TODO: public/images/hero/ 에 정지 이미지(WebP)가 들어오면 아래 주석을 풉니다.
             <picture>
@@ -67,7 +74,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
         </div>
 
         {/* Background Video */}
-        {mediaPosts && mediaPosts.length > 0 && mediaPosts[0].videoId ? (
+        {showHeroVideo ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1.5 }} className="absolute w-[300%] h-[300%] lg:w-[150%] lg:h-[150%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
             <iframe
               src={`https://www.youtube.com/embed/${mediaPosts[0].videoId}?autoplay=1&mute=1&loop=1&playlist=${mediaPosts[0].videoId}&controls=0&modestbranding=1&rel=0&disablekb=1&iv_load_policy=3`}
@@ -90,7 +97,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
         >
           <motion.div 
             variants={itemVariants} 
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] mb-6 md:mb-8 backdrop-blur-md shadow-sm"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[11px] font-bold uppercase tracking-[0.2em] mb-6 md:mb-8"
           >
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
             <span>Since 2008 • Jiin Pain Medicine Clinic</span>
@@ -98,17 +105,17 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
 
           <motion.h1 
             variants={itemVariants}
-            className="font-serif text-3xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-5 md:mb-6 tracking-tight drop-shadow-2xl break-keep"
+            className="font-serif text-3xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-5 md:mb-6 tracking-tight break-keep"
           >
             교과서적인 진료, <br />
-            <span className="text-primary italic relative inline-block">
+            <span className="text-[#F0B88C] italic relative inline-block">
               진심을 다하는 최선의 치료
             </span>
           </motion.h1>
 
           <motion.p 
             variants={itemVariants} 
-            className="text-sm md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 font-normal leading-relaxed break-keep drop-shadow-md"
+            className="text-sm md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 font-normal leading-relaxed break-keep"
           >
             전국에서 찾아오시는 환자분들과 {CLINIC_YEARS}년간 쌓아온 신뢰의 무게. <br />
             단순한 통증 완화를 넘어, <br className="hidden md:block" />
@@ -116,13 +123,13 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex flex-wrap gap-5">
-            <Button asChild size="lg" className="h-16 rounded-full px-10 text-lg font-medium bg-primary text-white hover:bg-primary/90 transition-all shadow-xl border-none">
+            <Button asChild size="lg" className="h-16 rounded-full px-10 text-lg font-medium bg-primary text-white hover:bg-primary/90 transition-all border-none">
               <Link href="/intro">
                 병원 소개
               </Link>
             </Button>
             {mediaPosts && mediaPosts.length > 0 && mediaPosts[0].videoId && (
-              <Button asChild size="lg" variant="outline" className="h-16 rounded-full px-10 text-lg font-medium border-white/20 hover:bg-white/20 bg-white/5 backdrop-blur-md transition-all text-white hover:text-white shadow-xl">
+              <Button asChild size="lg" variant="outline" className="h-16 rounded-full px-10 text-lg font-medium border-white/30 hover:bg-white/20 bg-white/10 transition-all text-white hover:text-white">
                 <Link href={`/news/${mediaPosts[0].id}`} className="flex items-center gap-2">
                   <Play className="w-5 h-5 fill-white" />
                   영상 원본 시청
@@ -131,6 +138,18 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
             )}
           </motion.div>
         </motion.div>
+
+        {hasHeroVideo && !prefersReducedMotion && (
+          <button
+            type="button"
+            onClick={() => setHeroVideoPaused((paused) => !paused)}
+            aria-pressed={heroVideoPaused}
+            className="absolute bottom-4 right-4 z-20 inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/30 bg-[#283038]/70 px-4 text-xs font-bold text-white transition-colors hover:bg-[#283038] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F0B88C]"
+          >
+            {heroVideoPaused ? <Play className="size-3.5 fill-white" aria-hidden="true" /> : <Pause className="size-3.5 fill-white" aria-hidden="true" />}
+            {heroVideoPaused ? "배경 영상 재생" : "배경 영상 정지"}
+          </button>
+        )}
       </section>
 
       {/* 1-b. 증상 우선 진입: 부위별 질환 바로가기 (정적, 애니메이션 없음)
@@ -208,7 +227,6 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
 
       {/* 2. Medical Philosophy (Premium Editorial) */}
       <section className="py-12 md:py-24 px-4 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-primary/2 rounded-full blur-[100px] md:blur-[150px] -translate-y-1/2 translate-x-1/2 -z-10" />
 
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-[2fr_3fr] gap-8 md:gap-16 items-center">
@@ -217,9 +235,9 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2 }}
-              className="relative aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl md:shadow-2xl group"
+              className="relative aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-premium group"
             >
-              <div className="absolute inset-0 bg-zinc-900/5 group-hover:bg-transparent transition-colors duration-700" />
+              <div className="absolute inset-0 bg-foreground/5 group-hover:bg-transparent transition-colors duration-700" />
               <img
                 src="/doctor-choi.jpg"
                 alt="최용민 대표원장"
@@ -229,7 +247,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                 <p className="font-serif italic text-base md:text-2xl text-foreground mb-3">&quot;지인(知人)은 환자를 진료 대상이 아닌 한 사람으로 알아가며, 진심을 다하겠다는 저희의 정체성입니다.&quot;</p>
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="w-10 md:w-12 h-[1px] bg-primary" />
-                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">Founding Directors</span>
+                  <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest">Founding Directors</span>
                 </div>
               </div>
             </motion.div>
@@ -243,7 +261,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
               >
                 <div className="flex items-center gap-2 md:gap-3">
                   <span className="w-8 md:w-10 h-[1px] bg-accent" />
-                  <span className="text-accent text-[10px] md:text-[12px] font-bold uppercase tracking-[0.3em]">Our Philosophy</span>
+                  <span className="text-accent text-[11px] md:text-[12px] font-bold uppercase tracking-[0.3em]">Our Philosophy</span>
                 </div>
                 <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.2] break-keep">
                   전국 80만 명이 <br />
@@ -266,7 +284,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                     </motion.svg>
                   </span>
                 </h2>
-                <p className="text-base md:text-xl text-slate-700 font-normal leading-relaxed break-keep max-w-xl">
+                <p className="text-base md:text-xl text-foreground font-normal leading-relaxed break-keep max-w-xl">
                   저희는 화려한 인테리어나 과장된 광고보다, 통증의 근본 원인을 정확히 찾아내는 <strong className="font-bold text-foreground underline decoration-primary/30 underline-offset-4">교과서적인 진료</strong>에 집중합니다. 2008년 개원 이후 한결같이 지켜온 이 원칙이 오늘의 지인을 만들었습니다.
                 </p>
               </motion.div>
@@ -282,13 +300,13 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1 }}
-                    className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-100 shadow-premium hover:shadow-xl transition-all duration-500 group/card"
+                    className="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-border shadow-premium hover:border-primary/30 transition-all duration-500 group/card"
                   >
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-primary/5 flex items-center justify-center mb-4 md:mb-6 text-primary group-hover/card:bg-primary group-hover/card:text-white transition-colors duration-500">
                       <HeartPulse className="w-4 h-4 md:w-5 md:h-5" />
                     </div>
                     <h4 className="font-bold text-lg md:text-xl mb-2 md:mb-3 text-foreground">{item.title}</h4>
-                    <p className="text-slate-600 text-[13px] md:text-sm font-normal leading-relaxed break-keep">{item.desc}</p>
+                    <p className="text-muted-foreground text-[13px] md:text-sm font-normal leading-relaxed break-keep">{item.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -381,7 +399,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
             role="region"
             aria-label="방송·영상 자료 목록 (좌우로 스크롤)"
             tabIndex={0}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-4 px-4 pb-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-4 px-4 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             {mediaPosts.map((media, idx) => (
               <motion.div
@@ -390,14 +408,14 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.15 }}
-                className="group cursor-pointer snap-start shrink-0 w-[82%] sm:w-[46%] lg:w-[400px]"
+                className="group cursor-pointer snap-start shrink-0 w-[82%] sm:w-[46%] lg:w-[calc((100%-3rem)/3)]"
                 onClick={() => {
                   if (media.type === "video") {
                     setPlayingVideoIdx(idx);
                   }
                 }}
               >
-                <div className={`relative h-64 rounded-[2rem] overflow-hidden mb-6 shadow-premium flex items-center justify-center ${media.image ? "bg-slate-900" : "bg-secondary border border-border"}`}>
+                <div className={`relative h-64 rounded-[2rem] overflow-hidden mb-6 shadow-premium flex items-center justify-center ${media.image ? "bg-foreground" : "bg-secondary border border-border"}`}>
                   {playingVideoIdx === idx && media.type === "video" ? (
                     media.videoId ? (
                       <iframe
@@ -428,8 +446,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                       {media.image ? (
                         <>
                           <img src={media.image} alt={media.title} className="w-full h-full object-cover absolute inset-0 group-hover:scale-105 transition-transform duration-700" />
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                          <div className="absolute inset-0 bg-[#283038]/45 group-hover:bg-[#283038]/60 transition-colors duration-500" />
                         </>
                       ) : (
                         <img src="/images/logo-header.png" alt="" aria-hidden="true" className="h-12 w-auto opacity-90" />
@@ -437,14 +454,14 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
 
                       {media.type === "video" && (
                         <div className="absolute inset-0 flex items-center justify-center z-10">
-                          <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white border shadow-lg transition-colors duration-300 ${media.image ? "bg-white/20 backdrop-blur-md border-white/30 group-hover:bg-primary/90" : "bg-primary border-primary group-hover:bg-primary/90"}`}>
+                          <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white border shadow-lg transition-colors duration-300 ${media.image ? "bg-[#283038]/60 border-white/30 group-hover:bg-primary/90" : "bg-primary border-primary group-hover:bg-primary/90"}`}>
                             <Play className="w-6 h-6 md:w-7 md:h-7 ml-1 fill-white" />
                           </div>
                         </div>
                       )}
 
                       <div className="absolute top-6 left-6 flex gap-2 z-20">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${media.image ? "bg-white/20 backdrop-blur-md text-white" : "bg-card border border-border text-primary"}`}>{media.category}</span>
+                        <span className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider ${media.image ? "bg-[#283038]/70 text-white" : "bg-card border border-border text-primary"}`}>{media.category}</span>
                       </div>
                       <div className={`absolute bottom-6 left-6 flex items-center gap-2 z-20 ${media.image ? "text-white/90" : "text-muted-foreground"}`}>
                         <Calendar className="w-3.5 h-3.5" />
@@ -468,8 +485,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
       </section>
 
       {/* 4. CSR / Community (Premium Timeline & Testimonials) */}
-      <section className="py-16 md:py-24 bg-zinc-50/50 px-4 relative overflow-hidden">
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-primary/2 rounded-full blur-[120px] -z-10" />
+      <section className="py-16 md:py-24 bg-background px-4 relative overflow-hidden">
 
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
@@ -477,7 +493,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent font-bold tracking-[0.2em] text-[10px] uppercase mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent font-bold tracking-[0.2em] text-[11px] uppercase mb-6"
             >
               <HeartPulse className="w-4 h-4" />
               <span>Community Impact</span>
@@ -521,7 +537,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                   환자분들의 <br />
                   <span className="text-primary italic">진심</span>이 담긴 목소리
                 </h3>
-                <p className="text-slate-600 text-sm md:text-base font-normal leading-relaxed break-keep max-w-sm">
+                <p className="text-muted-foreground text-sm md:text-base font-normal leading-relaxed break-keep max-w-sm">
                   {CLINIC_YEARS}년간 환자분들과 쌓아온 신뢰는 저희의 가장 큰 자부심입니다. 보내주신 격려에 따뜻한 치료로 답하겠습니다.
                 </p>
               </div>
@@ -552,7 +568,7 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: idx * 0.1, duration: 0.8 }}
-                    className="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-premium border border-slate-100 relative group overflow-hidden"
+                    className="bg-white p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-premium border border-border relative group overflow-hidden"
                   >
                     {/* Subtle Background Quotes */}
                     <span className="absolute -top-1 left-3 font-serif text-[4rem] text-primary/[0.03] leading-none select-none pointer-events-none">&ldquo;</span>
@@ -560,17 +576,17 @@ export default function HomeClient({ mediaPosts }: { mediaPosts: any[] }) {
                     <p className="font-serif italic text-[15px] md:text-lg text-foreground font-medium leading-[1.7] mb-6 relative z-10 break-keep">
                       {review.text}
                     </p>
-                    <div className="flex items-center justify-between relative z-10 border-t border-slate-50 pt-5">
+                    <div className="flex items-center justify-between relative z-10 border-t border-border pt-5">
                       <div className="flex items-center gap-2.5 md:gap-3">
                         <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-primary/5 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors duration-500">
                           <Users className="w-4 h-4" />
                         </div>
                         <div>
                           <p className="font-bold text-foreground text-[13px] md:text-sm">{review.name}</p>
-                          <p className="text-[9px] text-muted-foreground uppercase tracking-wider font-bold">Patient Story</p>
+                          <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-bold">Patient Story</p>
                         </div>
                       </div>
-                      <span className="px-3 py-1 rounded-full bg-slate-50 text-slate-500 text-[10px] font-bold border border-slate-100">{review.tag}</span>
+                      <span className="px-3 py-1 rounded-full bg-background text-muted-foreground text-[11px] font-bold border border-border">{review.tag}</span>
                     </div>
                   </motion.div>
                 ))}

@@ -1,10 +1,12 @@
 import { Metadata } from "next";
 import { PageHero } from "@/components/layout/PageHero";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    title: "비급여 수가표 | 지인마취통증의학과 강북점",
+export const metadata: Metadata = pageMetadata({
+    title: "비급여 수가표",
     description: "지인마취통증의학과 강북점의 비급여 항목 및 수가를 안내해 드립니다. 의료법 제45조에 의거하여 투명하게 공개합니다.",
-};
+    path: "/policy/price",
+});
 
 const DRUGS = [
     { name: "네포팜주 (Nefopam inj)", code: "6988503581", price: "10,000", note: "" },
@@ -84,26 +86,26 @@ export default function PricePolicyPage() {
                 <section>
                     <div className="flex items-center gap-3 mb-6 md:mb-8">
                         <div className="w-1.5 h-8 bg-primary rounded-full" />
-                        <h2 className="text-xl md:text-2xl font-serif font-bold text-zinc-900 tracking-tight">약제 <span className="text-muted-foreground font-normal text-sm md:text-base ml-2">(주사제·캡슐 등)</span></h2>
+                        <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground tracking-tight">약제 <span className="text-muted-foreground font-normal text-sm md:text-base ml-2">(주사제·캡슐 등)</span></h2>
                     </div>
-                    <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden">
+                    <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-premium border border-border overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left min-w-[640px]">
                                 <thead>
-                                    <tr className="bg-slate-50/80 border-b border-slate-200">
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">명칭</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">코드</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider text-right">비용(원)</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">비고</th>
+                                    <tr className="bg-background border-b border-border">
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">명칭</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">코드</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider text-right">비용(원)</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">비고</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-50">
+                                <tbody className="divide-y divide-border">
                                     {DRUGS.map((d, i) => (
                                         <tr key={i} className="hover:bg-primary/[0.02] transition-colors">
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-900 font-medium text-[13px] break-keep">{d.name}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-foreground font-medium text-[13px] break-keep">{d.name}</td>
                                             <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs font-mono">{d.code}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-900 font-bold text-right tabular-nums">{d.price}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-500 text-xs">{d.note}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-foreground font-bold text-right tabular-nums">{d.price}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs">{d.note}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -116,28 +118,28 @@ export default function PricePolicyPage() {
                 <section>
                     <div className="flex items-center gap-3 mb-6 md:mb-8">
                         <div className="w-1.5 h-8 bg-primary rounded-full" />
-                        <h2 className="text-xl md:text-2xl font-serif font-bold text-zinc-900 tracking-tight">행위 <span className="text-muted-foreground font-normal text-sm md:text-base ml-2">(검사·치료 등)</span></h2>
+                        <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground tracking-tight">행위 <span className="text-muted-foreground font-normal text-sm md:text-base ml-2">(검사·치료 등)</span></h2>
                     </div>
-                    <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden">
+                    <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-premium border border-border overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left min-w-[740px]">
                                 <thead>
-                                    <tr className="bg-slate-50/80 border-b border-slate-200">
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">분류</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">명칭</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">코드</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider text-right">비용(원)</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">비고</th>
+                                    <tr className="bg-background border-b border-border">
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">분류</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">명칭</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">코드</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider text-right">비용(원)</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">비고</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-50">
+                                <tbody className="divide-y divide-border">
                                     {PROCEDURES.map((p, i) => (
                                         <tr key={i} className="hover:bg-primary/[0.02] transition-colors">
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-500 text-xs font-bold">{p.category}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-900 font-medium text-[13px] break-keep">{p.name}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs font-bold">{p.category}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-foreground font-medium text-[13px] break-keep">{p.name}</td>
                                             <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs font-mono">{p.code}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-900 font-bold text-right tabular-nums whitespace-nowrap">{p.price}{p.range && <span className="text-muted-foreground font-normal">{p.range}</span>}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-500 text-xs">{p.note}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-foreground font-bold text-right tabular-nums whitespace-nowrap">{p.price}{p.range && <span className="text-muted-foreground font-normal">{p.range}</span>}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs">{p.note}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -150,28 +152,28 @@ export default function PricePolicyPage() {
                 <section>
                     <div className="flex items-center gap-3 mb-6 md:mb-8">
                         <div className="w-1.5 h-8 bg-primary rounded-full" />
-                        <h2 className="text-xl md:text-2xl font-serif font-bold text-zinc-900 tracking-tight">치료재료 <span className="text-muted-foreground font-normal text-sm md:text-base ml-2">(보조기·재료 등)</span></h2>
+                        <h2 className="text-xl md:text-2xl font-serif font-bold text-foreground tracking-tight">치료재료 <span className="text-muted-foreground font-normal text-sm md:text-base ml-2">(보조기·재료 등)</span></h2>
                     </div>
-                    <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-premium border border-slate-100 overflow-hidden">
+                    <div className="bg-white rounded-2xl md:rounded-[2rem] shadow-premium border border-border overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm text-left min-w-[640px]">
                                 <thead>
-                                    <tr className="bg-slate-50/80 border-b border-slate-200">
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">분류</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">명칭</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">코드</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider text-right">비용(원)</th>
-                                        <th className="px-4 md:px-6 py-4 font-bold text-zinc-700 text-[11px] md:text-xs uppercase tracking-wider">비고</th>
+                                    <tr className="bg-background border-b border-border">
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">분류</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">명칭</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">코드</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider text-right">비용(원)</th>
+                                        <th className="px-4 md:px-6 py-4 font-bold text-foreground text-[11px] md:text-xs uppercase tracking-wider">비고</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-50">
+                                <tbody className="divide-y divide-border">
                                     {MATERIALS.map((m, i) => (
                                         <tr key={i} className="hover:bg-primary/[0.02] transition-colors">
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-500 text-xs font-bold">{m.category}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-900 font-medium text-[13px] break-keep">{m.name}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs font-bold">{m.category}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-foreground font-medium text-[13px] break-keep">{m.name}</td>
                                             <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs font-mono">{m.code}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-900 font-bold text-right tabular-nums">{m.price}</td>
-                                            <td className="px-4 md:px-6 py-3.5 text-zinc-500 text-xs">{m.note}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-foreground font-bold text-right tabular-nums">{m.price}</td>
+                                            <td className="px-4 md:px-6 py-3.5 text-muted-foreground text-xs">{m.note}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -181,8 +183,8 @@ export default function PricePolicyPage() {
                 </section>
 
                 {/* Footer Notice */}
-                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-premium border border-slate-100">
-                    <p className="text-[12px] md:text-[13px] text-zinc-500 leading-relaxed break-keep">
+                <div className="bg-white p-6 md:p-8 rounded-2xl shadow-premium border border-border">
+                    <p className="text-[12px] md:text-[13px] text-muted-foreground leading-relaxed break-keep">
                         <span className="text-primary font-bold">*</span> 위 비용은 치료 재료대 및 사용량에 따라 변동될 수 있습니다.<br />
                         <span className="text-primary font-bold">*</span> 상세한 비용 문의는 원내 데스크(02-6431-1234)에서 안내해 드립니다.<br />
                         <span className="text-primary font-bold">*</span> 본 수가표는 의료법 제45조 및 시행규칙 제42조의2에 의거하여 게시합니다.

@@ -10,6 +10,14 @@ import { CLINIC_YEARS } from "@/lib/clinic";
 // 사업자등록번호 — 실제 번호를 입력하면 푸터에 자동 표시됩니다 (비어 있으면 숨김).
 const BUSINESS_REG_NO = "";
 
+// 소셜 채널 — 주소를 넣으면 푸터에 아이콘이 나타납니다(비어 있으면 숨김).
+// 예전에는 주소 없이 "#" 링크로 아이콘만 보였는데, 눌러도 아무 일이 없어 숨겼습니다.
+const SOCIAL_LINKS = [
+    { label: "인스타그램", href: "", icon: Instagram },
+    { label: "카카오톡 채널", href: "", icon: MessageCircle },
+    { label: "블로그", href: "", icon: Heart },
+].filter((link) => link.href);
+
 const FOOTER_SECTIONS = [
     {
         title: "Navigation",
@@ -55,17 +63,15 @@ export function Footer() {
                             전국에서 찾아오시는 환자분들과 {CLINIC_YEARS}년간 지켜온 정직한 진료의 무게.
                         </p>
 
-                        <div className="flex gap-3">
-                            <a href="#" aria-label="준비 중" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[#CBD2D9] hover:text-white hover:bg-primary transition-colors">
-                                <Instagram size={16} />
-                            </a>
-                            <a href="#" aria-label="준비 중" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[#CBD2D9] hover:text-white hover:bg-primary transition-colors">
-                                <MessageCircle size={16} />
-                            </a>
-                            <a href="#" aria-label="준비 중" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-[#CBD2D9] hover:text-white hover:bg-primary transition-colors">
-                                <Heart size={16} />
-                            </a>
-                        </div>
+                        {SOCIAL_LINKS.length > 0 && (
+                            <div className="flex gap-3">
+                                {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
+                                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-[#CBD2D9] hover:text-white hover:bg-primary transition-colors">
+                                        <Icon size={16} aria-hidden="true" />
+                                    </a>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {/* Links Navigation Grid */}
@@ -73,10 +79,10 @@ export function Footer() {
                         {FOOTER_SECTIONS.map((section) => (
                             <div key={section.title} className="space-y-4">
                                 <h4 className="text-xs font-bold text-white/70 tracking-[0.2em] uppercase">{section.title}</h4>
-                                <ul className="space-y-2.5">
+                                <ul className="space-y-1">
                                     {section.items.map((item) => (
                                         <li key={item.label}>
-                                            <Link href={item.href} className="text-[15px] font-medium hover:text-white transition-colors">
+                                            <Link href={item.href} className="inline-block py-1 text-[15px] font-medium hover:text-white transition-colors">
                                                 {item.label}
                                             </Link>
                                         </li>
@@ -151,8 +157,7 @@ export function Footer() {
                     </div>
                     
                     <div className="flex gap-6 text-xs font-bold uppercase tracking-widest text-[#CBD2D9]">
-                        <Link href="/policy/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
+                        <Link href="/policy/privacy" className="inline-block py-1 hover:text-white transition-colors">Privacy Policy</Link>
                     </div>
                 </div>
             </div>

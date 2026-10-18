@@ -68,6 +68,7 @@
 - 라이브가 아직 개발 서버라 `main` 직접 push 를 Matt 이 허용했습니다(2026-10-07). Matt 이 "적용해줘/올려줘/라이브에 적용" 이라고 하면 커밋하고 `main` 에 올립니다. 그런 말이 없으면 변경만 남기고 보고합니다.
 - 올리기 전 `git fetch` 로 `origin/main` 이 앞서 있지 않은지 확인하고, `git merge --ff-only` 로만 합칩니다.
 - 하지 않는 것: 강제 푸시, 브랜치 삭제, `git reset --hard`, `git clean`, `git add .`/`git add -A`(저장소에 커밋하지 않는 폴더 `Claude outputs/`, `_to_review/`, `captures-new/`, `docs/design-handover/reference/` 가 딸려 들어갑니다). 파일을 지정해서 add 합니다.
+- **커밋 작성자는 반드시 `Matt Choi <<이메일>>`(저장소 기본 설정)으로 둡니다.** Vercel 이 팀 소유자 외의 작성자가 만든 커밋은 배포를 막습니다(2026-10-17~18 에 작성자 `jaysholic-ceo` 커밋 2건이 `BLOCKED: TEAM_ACCESS_REQUIRED` 로 막혔고, 빌드가 멈춘 것처럼 보였지만 Cancel 로는 풀리지 않았습니다). 작성자를 바꾸는 `git config user.*`, `--author` 는 쓰지 않습니다.
 - 커밋 메시지는 `feat:`, `fix:`, `style:`, `docs:`, `chore:` 로 시작하는 영어 한 줄. 정식 오픈(도메인 연결) 때는 이 규칙을 다시 정해야 하니 그때 Matt 에게 먼저 묻습니다.
 
 ## 4. 현재 상태
@@ -75,6 +76,12 @@
 사이트 구성: 홈(히어로 영상 → 부위별 질환 바로가기 → 철학 → 수치 띠 → 언론·활동 → 연혁·후기), 본원 소개(의료진 3인 상세), 주요 질환(카드 8개 + 질환 상세), 진료안내, 본원소식(목록·상세), 비급여·개인정보처리방침. `/community`, `/notice`, `/location` 은 308 리다이렉트로 정리했습니다(`next.config.ts`).
 
 수치 띠(홈): 18년(자동 계산) · 80만 명 · 3인 · **다수 출연**(KBS·MBC·SBS·MBN 등 주요 방송).
+
+검색·보안 기본값(2026-10-17~18):
+- 모든 페이지에 고유 제목·설명·canonical·공유 정보(`src/lib/seo.ts` 의 `pageMetadata`)가 있고, 사이트맵(36쪽)·`robots.txt` 가 자동 생성됩니다.
+- **정식 오픈 전이라 전 페이지 `noindex`** 입니다. 오픈할 때 `src/lib/clinic.ts` 의 `SITE_INDEXABLE` 을 `true` 로, `SITE_URL` 을 확정 도메인으로 바꿉니다(이 두 줄만 바꾸면 메타·사이트맵·robots·구조화 데이터가 함께 바뀝니다).
+- 보안 헤더 7종(`next.config.ts`). CSP 는 위험이 낮은 지시어만 강제하고 전체 정책은 Report-Only 입니다. 라이브에서 위반 보고 0건을 확인했으니, 며칠 더 지켜본 뒤 강제로 바꿀 수 있습니다.
+- 배포 워크플로는 Vercel CLI `64.5.0` 고정, `timeout-minutes: 15`.
 
 ## 5. 이 세션에서 한 일과 결정
 
@@ -88,6 +95,9 @@
 | 10-09 | `e9b44dc` | 주요 질환에서 디스크·척추관협착증을 카드 1개로 합침(카드 안에 질환 링크 2개, 카드 8개 4열 2줄). 상세 주소·홈·메뉴는 그대로(Matt 이 "카드 안에 링크 두 개", "주요 질환 페이지만"을 선택) |
 | 10-09 | `3db1e85`, `14eac5d` 외 | 작업 인계 문서 추가·갱신(`docs/HANDOVER.md`, `AGENTS.md`, `GEMINI.md`), 빈 페이지 3곳 리다이렉트, 뉴스 제목 `break-keep`, 주요 질환 카드 높이 균형 |
 | 10-16 | `062feee` | 수치 띠 4번째 칸을 "5층"에서 "다수 출연"으로 변경 |
+| 10-17 | `9d715fc` | (Cowork 세션) 보안 헤더 7종 + CSP Report-Only, Vercel CLI 버전 고정, DB 글 HTML 검사 도구 `docs/db-removal/scan-posts.cjs` |
+| 10-18 | `8dc29c6` | (Cowork 세션) 페이지별 메타·canonical·공유 정보, 사이트맵 전체·`robots.txt`, 오픈 전 `noindex`, 질환 상세 정적 생성(목록 밖 주소 404), 배경 영상 정지 버튼(모션 줄이기면 자동 정지), 대비·작은 글씨·터치 영역 보정, 빈 링크 정리(소셜 아이콘은 주소가 생기면 표시), 블러·그라데이션·큰 그림자 제거, 토큰 밖 회색을 토큰으로, 언론 카드 데스크톱 3장 한 줄, "대항→대한마취통증의학회" 오타 |
+| 10-18 | (이 문서와 같은 커밋) | (Cowork 세션) 남은 10px 글씨 11px로, 모바일 메뉴 스크린리더 설명 추가, 질환 데이터의 안 쓰는 `color` 필드 제거, e2e 테스트를 현재 화면 기준으로 재작성(질환 카드 8개·링크 9개·상세 9쪽·404·SEO 기본값·빈 링크, 34개 통과) |
 
 **왜 그렇게 정했나 (같은 질문이 또 나올 때 참고)**
 - 부위 그림은 디자인 시안 B 의 5종뿐이라 질환별 전용 그림은 없습니다. 같은 부위 질환은 그 부위 그림을 함께 씁니다(척추 2·어깨 3·신경 2·손 1·무릎 1). 질환별 전용 그림(`icon-disease-*.svg`)은 2026-10-06 에 Matt 이 보류 결정했고 아직 열려 있습니다.
@@ -104,7 +114,7 @@
 - 수치 띠 "다수 출연"의 "출연" 표현 확인
 - 부위 그림 5종의 해부 형태를 의료진이 감수(공개 전 필수)
 - 풍선신경성형술 상세 문구 제공(지금은 "안내를 준비하고 있습니다")
-- 도메인 확정: `layout.tsx` 의 `metadataBase`(`jiin-clinic-gangbuk.com`)와 `openGraph.url`(`jiin-gangbuk.com`, 임시)이 다름
+- 도메인 확정: 지금은 `src/lib/clinic.ts` 의 `SITE_URL` 한 곳에 임시로 `jiin-clinic-gangbuk.com` 을 둠(예전에 둘로 나뉘어 있던 것을 10-18 에 하나로 모음). 확정되면 이 값만 바꾸고, 오픈 때 `SITE_INDEXABLE=true`
 - "전국 80만 명" 등 수치·광고성 표현의 근거(사이트 본문·메타에 있음)
 - 오시는 길 네이버 지도 연결(Matt 이 직접), 연결 후 `public/images/illust/map-schematic*.svg` 삭제
 - 삭제 승인 대기: 쓰지 않는 `public/images/illust/part-*.svg` 5개, 시설 사진이 들어온 뒤 `facility-*.svg`
@@ -120,8 +130,14 @@
 
 **D. 코드로 바로 할 수 있는 것 (Matt 이 시키면)**
 - 질환 상세 상단 그림이 데스크톱(`lg` 이상)에서만 보임 → 모바일에도 보일지 결정 필요
-- e2e 테스트는 페이지가 뜨는지만 확인 → 질환 카드 8개·링크 테스트 추가 가능
+- CSP 를 Report-Only 에서 강제로 전환(위반 보고가 계속 0건이면)
+- 푸터의 `#CBD2D9`·`#EEF1F4` 는 토큰에 없는 색(어두운 띠 위 보조 글자). 토큰으로 맞추려면 white 계열로 바꿔야 해 화면이 밝아지므로 보류
 - 린트 경고 2건(`gtag.ts`, `naver-wcs.ts`)은 분석 스크립트라 Matt 승인 전에는 고치지 않음
+
+**E. 운영 (Matt 계정)**
+- 라이브에 GA·네이버 분석 스크립트가 실리지 않음: Vercel 환경변수에 분석 ID(`.env.example` 의 6개)가 없음. 코드는 ID 가 있으면 자동으로 켜짐
+- Vercel 이 Hobby(개인·비상업) 플랜이라 팀 소유자 외 작성자 커밋을 막음(§3 참고). 정식 오픈 전 Pro 전환 또는 프로젝트 이전을 결정
+- `bang` 스냅샷이 `845ec7a` 기준이라 10-17~18 변경이 빠져 있음 → `tools/export-bang.py` 로 새로 만들기
 
 ## 7. 기술 메모
 
@@ -134,7 +150,11 @@ src/app/medical/MedicalClient.tsx   주요 질환 카드 (links 가 있으면 �
 src/app/medical/[slug]/MedicalDetailClient.tsx  질환 상세 (DISEASES 에 문구)
 src/data/body-parts.ts              부위 5종·질환 링크·그림 경로·getBodyPartBySlug  ← 부위↔질환의 단일 원본
 src/data/news.ts, media.ts, posts.*  게시글·언론 카드 정적 데이터
-src/lib/clinic.ts                   OPENED_YEAR=2008, CLINIC_YEARS
+src/lib/clinic.ts                   OPENED_YEAR=2008, CLINIC_YEARS, SITE_NAME, SITE_URL(임시 도메인), SITE_INDEXABLE(오픈 전 false)
+src/lib/seo.ts                      pageMetadata({title, description, path, image}) — 페이지별 메타·canonical·공유 정보. 새 페이지에도 이걸 씁니다
+src/app/sitemap.ts, robots.ts       사이트맵(질환·게시글 자동 포함)·robots
+src/app/intro/doctor-*/layout.tsx   의료진 상세는 클라이언트 페이지라 메타데이터를 레이아웃에서 지정
+tests/landing.spec.ts               e2e (빌드 후 next start -p 3000 을 띄우고 npx playwright test)
 public/images/illust/part-*.webp    부위 그림 5종(높이 360px, 투명 배경)
 ```
 질환을 추가·수정할 때는 3곳을 같이 봅니다: `body-parts.ts`(링크), `MedicalDetailClient.tsx` 의 `DISEASES`(상세 문구), `MedicalClient.tsx` 의 `diseases`(목록 카드).
@@ -145,6 +165,9 @@ public/images/illust/part-*.webp    부위 그림 5종(높이 360px, 투명 배�
 - 한글 문구는 `break-keep`. 모바일 누르는 영역은 `min-h-11`~`min-h-12` 이상.
 - `PageHero` 는 가운데 정렬 고정이고 폭 클래스를 따로 넘기지 않습니다. 슬롯: `eyebrow`, `title`, `description`, `breadcrumb`, `aside`, `overlap`.
 - 수치 띠: 모션 줄이기에서도 숫자는 올라가며, 구조(aria-hidden 애니메이션 값 + sr-only 최종값)를 유지합니다.
+- 어두운 띠의 `text-primary` 는 `globals.css` 규칙으로 연한 구리(`#F0B88C`)로 바뀝니다. 대상 배경: `bg-black`, `bg-zinc-900`, `bg-slate-900`, `bg-foreground`. 어두운 면을 새로 만들면 이 클래스 중 하나를 쓰거나 글자색을 `text-[#F0B88C]` 로 직접 씁니다(구리 `#A8531F` 는 slate 위 2.5:1 로 부족).
+- 색은 토큰 클래스(`text-foreground`, `text-muted-foreground`, `bg-background`, `bg-secondary`, `border-border`, `bg-foreground`)를 씁니다. `zinc-*`·`slate-*` 회색은 10-18 에 모두 걷어냈습니다(진료안내의 버스 노선 파랑·초록은 실제 노선색이라 예외).
+- 블러·유리·그라데이션·큰 그림자는 쓰지 않습니다(10-18 에 걷어냄). 그림자는 `shadow-premium`(slate 색 그림자) 하나만.
 
 **확인 방법**
 ```bash
@@ -153,6 +176,7 @@ npm run dev                 # http://localhost:3000
 npm run lint                # 기존 경고 2건 외 새 경고가 없어야 함
 npm run build               # 오류 없이 끝나야 함 (타입 검사 포함. tsc --noEmit 은 지워진 관리자 화면의 .next/dev/types 오류를 내지만 무관)
 npx next start -p 3100      # build 후 프로덕션 확인
+npx playwright test         # e2e (먼저 next start -p 3000. 다른 주소는 PW_BASE_URL=http://localhost:3100)
 python3 docs/design-handover/tools/capture.py   # 6개 페이지 캡처 → /tmp/jiin-captures
 ```
 화면은 1440, 1024, 768, 390 폭에서 글자 잘림, 가로 스크롤, 이미지 비율, 대비, 하단 고정 바에 본문이 가리지 않는지를 봅니다. 배포 확인은 push 후 1~2분 뒤 라이브 주소에서 바꾼 문구가 보이는지 `curl` 로 확인했습니다.

@@ -120,6 +120,7 @@ public/images/illust/part-*.webp    부위 그림 5종(높이 360px, 투명 배�
 | 10-09 | `e9b44dc` | 주요 질환에서 디스크·척추관협착증을 카드 1개로 합침(카드 안에 링크 2개). 카드 8개, 4열 2줄. 상세 주소·홈·메뉴는 그대로 |
 | 10-09 | `3db1e85`, `e715d89` | Antigravity 인계 문서 추가(`HANDOVER.md`, `AGENTS.md`, `GEMINI.md`), 빈 페이지 3곳(`/community`, `/notice`, `/location`) 308 리다이렉트·삭제 및 `sitemap.ts` 갱신, 뉴스 제목 `break-keep`, 주요 질환 첫 줄 카드 높이 균형(`h-full`) |
 | 10-16 | `062feee` | 홈 수치 띠(`StatsBand.tsx`) 4번째 칸을 "5층"에서 "다수 출연"(KBS·MBC·SBS·MBN 등 주요 방송)으로 변경 (`text` 항목, 숫자 카운트업 제외) |
+| 10-17~18 | `9d715fc`, `8dc29c6` 외 | 보안 헤더·CSP Report-Only, 페이지별 메타·사이트맵·robots·오픈 전 noindex(`src/lib/clinic.ts` 의 `SITE_URL`·`SITE_INDEXABLE`), 접근성 보정(배경 영상 정지 버튼 등), 블러·그라데이션 제거와 토큰 색 정리, e2e 재작성. 자세한 내용과 남은 일은 `docs/HANDOVER_CLAUDE.md` §4~§7 이 최신 |
 
 각 결정의 날짜와 이유는 `docs/design-handover/README.md` §2 결정 기록에 있습니다.
 

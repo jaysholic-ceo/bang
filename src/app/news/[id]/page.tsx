@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import NoticeDetailClient from "./NoticeDetailClient";
 import { getNewsPost, getNewsPosts } from "@/data/posts";
+import { pageMetadata } from "@/lib/seo";
 
 // 정적 데이터만 사용하므로 빌드 시점에 모든 상세 페이지를 생성합니다.
 export const dynamicParams = false;
@@ -20,13 +21,12 @@ export async function generateMetadata(props: {
   const post = getNewsPost(id);
   if (!post) return { title: "Post Not Found" };
 
-  return {
+  return pageMetadata({
     title: post.title,
     description: stripHtml(post.content || post.excerpt || "").substring(0, 160),
-    openGraph: {
-      images: post.thumbnail ? [post.thumbnail] : undefined,
-    },
-  };
+    path: `/news/${post.id}`,
+    image: post.thumbnail || undefined,
+  });
 }
 
 export default async function NoticeDetail(props: { params: Promise<{ id: string }> }) {

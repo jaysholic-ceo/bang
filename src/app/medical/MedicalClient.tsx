@@ -82,14 +82,14 @@ export default function MedicalClient() {
                                                 className="size-[64px] md:size-[76px] object-contain"
                                             />
                                         </div>
-                                        <span className="text-[10px] md:text-xs font-bold font-sans text-slate-300 uppercase tracking-widest group-hover:text-primary/40 transition-colors">
+                                        <span aria-hidden="true" className="text-[11px] md:text-xs font-bold font-sans text-muted-foreground uppercase tracking-widest group-hover:text-primary transition-colors">
                                             No. 0{i + 1}
                                         </span>
                                     </div>
 
                                     {/* Content Area */}
                                     <div className="pt-4">
-                                        <p className="text-[10px] font-bold tracking-[0.2em] text-primary/60 uppercase mb-3 md:mb-4 opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                                        <p className="text-[11px] font-bold tracking-[0.2em] text-primary uppercase mb-3 md:mb-4 opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-500">
                                             {disease.eng}
                                         </p>
                                         <h3 className={`text-2xl md:text-3xl font-serif font-bold text-foreground mb-4 tracking-tight transition-colors ${linked ? "group-hover:text-primary" : ""}`}>
@@ -103,7 +103,7 @@ export default function MedicalClient() {
                                             )}
                                         </h3>
                                         {disease.desc && (
-                                            <p className="text-slate-500 text-sm md:text-[15px] leading-relaxed font-normal break-keep group-hover:text-slate-700 transition-colors min-h-[4rem]">
+                                            <p className="text-muted-foreground text-sm md:text-[15px] leading-relaxed font-normal break-keep group-hover:text-foreground transition-colors min-h-[4rem]">
                                                 {disease.desc}
                                             </p>
                                         )}

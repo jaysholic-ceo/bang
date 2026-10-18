@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.PW_BASE_URL || 'http://localhost:3000',
     trace: 'on-first-retry',
   },
   projects: [
@@ -18,7 +18,8 @@ export default defineConfig({
     },
     {
       name: 'mobile',
-      use: { ...devices['iPhone 12'] },
+      // 크로미움만 설치해도 돌도록 안드로이드 기기로 모바일 폭을 확인합니다(iPhone 프리셋은 WebKit 설치가 필요).
+      use: { ...devices['Pixel 7'] },
     },
   ],
 });

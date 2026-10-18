@@ -6,7 +6,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import NaverAnalytics from "@/components/analytics/NaverAnalytics";
-import { CLINIC_YEARS } from "@/lib/clinic";
+import { CLINIC_YEARS, SITE_INDEXABLE, SITE_NAME, SITE_URL } from "@/lib/clinic";
+import { DEFAULT_OG_IMAGE, SITE_DESCRIPTION } from "@/lib/seo";
 
 const sans = Noto_Sans_KR({
   variable: "--font-sans",
@@ -25,12 +26,12 @@ const serif = Noto_Serif_KR({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jiin-clinic-gangbuk.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "지인마취통증의학과 강북점",
     template: "%s | 지인마취통증의학과 강북점"
   },
-  description: `${CLINIC_YEARS}년의 신뢰, 전국 80만 명이 선택한 비수술 보존 치료의 명가. 정밀한 진료와 따뜻한 회복을 약속합니다. 서울 강북구 수유동 통증의학과.`,
+  description: SITE_DESCRIPTION,
   keywords: ["통증의학과", "강북구 통증의학과", "수유동 통증의학과", "도수치료", "디스크치료", "대상포진", "오십견", "체외충격파"],
   authors: [{ name: "지인마취통증의학과 강북점" }],
   creator: "지인마취통증의학과 강북점",
@@ -43,25 +44,19 @@ export const metadata: Metadata = {
   openGraph: {
     title: "지인마취통증의학과 강북점",
     description: `${CLINIC_YEARS}년의 신뢰, 전문성에 따뜻함을 더한 수준 높은 비수술 통증 진료. 서울 강북구 수유동 통증의학과.`,
-    url: "https://jiin-gangbuk.com", // 임시 도메인
-    siteName: "지인마취통증의학과 강북점",
+    url: "/",
+    siteName: SITE_NAME,
     locale: "ko_KR",
     type: "website",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "지인마취통증의학과 강북점",
-      },
-    ],
+    images: [DEFAULT_OG_IMAGE],
   },
+  // 정식 오픈 전(SITE_INDEXABLE=false)에는 검색에 노출되지 않도록 noindex. 값은 src/lib/clinic.ts 에서 바꿉니다.
   robots: {
-    index: true,
-    follow: true,
+    index: SITE_INDEXABLE,
+    follow: SITE_INDEXABLE,
     googleBot: {
-      index: true,
-      follow: true,
+      index: SITE_INDEXABLE,
+      follow: SITE_INDEXABLE,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
@@ -79,9 +74,9 @@ export default function RootLayout({
     "@type": "MedicalBusiness",
     "name": "지인마취통증의학과 강북점",
     "alternateName": "Jiin Pain Clinic Gangbuk",
-    "image": "https://jiin-gangbuk.com/images/hospital-exterior.jpg", // 임시 경로
-    "@id": "https://jiin-gangbuk.com",
-    "url": "https://jiin-gangbuk.com",
+    "image": `${SITE_URL}/og-image.jpg`, // 외관 사진이 들어오면 교체
+    "@id": SITE_URL,
+    "url": SITE_URL,
     "telephone": "02-6431-1234",
     "priceRange": "$$",
     "address": {
@@ -127,14 +122,15 @@ export default function RootLayout({
         <GoogleAnalytics />
         <NaverAnalytics />
         <meta name="theme-color" content="#A8531F" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
       </head>
       <body
         className={`${sans.variable} ${serif.variable} ${sans.className} antialiased selection:bg-primary/20 bg-background text-foreground`}
       >
+        {/* 구조화 데이터 — <head> 에 직접 넣으면 클라이언트 렌더링 때 중복될 수 있어 body 첫머리에 둡니다(Next.js 권장 방식). */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-bold focus:text-black focus:shadow-lg"

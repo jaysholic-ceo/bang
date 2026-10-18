@@ -14,6 +14,7 @@ import {
     SheetContent,
     SheetHeader,
     SheetTitle,
+    SheetDescription,
     SheetTrigger,
 } from "@/components/ui/sheet";
 import {
@@ -103,7 +104,7 @@ export function Header() {
                                 <Link
                                     href={nav.href}
                                     aria-current={pathname.startsWith(nav.href) ? "page" : undefined}
-                                    className={`text-base font-bold transition-colors hover:text-primary ${
+                                    className={`inline-block py-1 text-base font-bold transition-colors hover:text-primary ${
                                         pathname.startsWith(nav.href) ? "text-primary" : "text-foreground"
                                     }`}
                                 >
@@ -178,6 +179,7 @@ export function Header() {
                                         <SheetTitle className="text-left">
                                             <Image src="/images/logo-header.png" alt="지인마취통증의학과 강북점" width={560} height={121} className="h-9 w-auto" />
                                         </SheetTitle>
+                                        <SheetDescription className="sr-only">사이트 메뉴</SheetDescription>
                                     </SheetHeader>
 
                                     <div className="flex flex-col gap-10">

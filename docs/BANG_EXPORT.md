@@ -1,6 +1,6 @@
 # 이 스냅샷에서 뺀 것
 
-기준: jiin-clinic `845ec7a` (2026-10-17). 판단 원칙: 비밀값이 들어 있을 수 있거나, 민감 여부가 조금이라도 애매하면 뺀다.
+기준: jiin-clinic `1e598e5` (2026-10-18). 판단 원칙: 비밀값이 들어 있을 수 있거나, 민감 여부가 조금이라도 애매하면 뺀다.
 
 ## 통째로 가져오지 않은 것
 
@@ -11,7 +11,7 @@
 | `Claude outputs/`, `_to_review/`, `captures-new/`, `docs/design-handover/reference/` | git 추적 대상이 아닌 작업 폴더·캡처 |
 | `node_modules/`, `.next/` | 빌드 산출물 |
 
-## 추적 파일 중 제외한 것 (44개)
+## 추적 파일 중 제외한 것 (45개)
 
 | 파일 | 이유 |
 | --- | --- |
@@ -20,6 +20,7 @@
 | `GEMINI.md` | 다른 코딩 도구용 지침(이 스냅샷의 대상이 아님) |
 | `docs/DB_REMOVAL_GUIDE.md` | 옛 DB 정리 절차. DB 접속과 얽혀 있어 제외(사용자 전용 작업) |
 | `docs/db-removal/export-posts.cjs` | 옛 DB 내보내기 스크립트(사용자 전용 작업) |
+| `docs/db-removal/scan-posts.cjs` | 옛 DB 내보내기 스크립트(사용자 전용 작업) |
 | `fix_hero_video.py` | 정리되지 않은 임시 스크립트 |
 | `public/doctor-choi.jpg` | 사진·로고 원본 이미지(의료진 사진, 뉴스 사진 30장, 로고, OG 이미지 등): 용량이 크고 인물 사진이 있어 제외. 라이브 사이트에서 볼 수 있음 |
 | `public/doctor-junghj.jpg` | 사진·로고 원본 이미지(의료진 사진, 뉴스 사진 30장, 로고, OG 이미지 등): 용량이 크고 인물 사진이 있어 제외. 라이브 사이트에서 볼 수 있음 |
